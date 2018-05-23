@@ -26,6 +26,18 @@ app.post('/product', function(request, response) {
     });
 });
 
+app.get('/product', function(request, response) {
+    //async if else responses
+    Product.find({}, function(err, products) {
+        if(err) {
+            response.status(500).send({error: "Could not find products"});
+        }
+        else {
+            response.status(200).send(products);
+        }
+    });
+});
+
 app.listen(3000, function() {
     console.log("Swag shop api running on port 3000");
 });
