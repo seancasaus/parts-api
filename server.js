@@ -10,6 +10,22 @@ var WishList = require('./model/wishlist');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 
+app.post('/product', function(request, response) {
+    var product = new Product();
+    product.title = request.body.title;
+    product.price = request.body.price;
+    product.save(function(err, savedProduct) {
+        //send back error
+        if(err) {
+            response.status(500).send({error: "Could not save product"});
+        }
+        //send back newly created product
+        else {
+            response.status(200).send(savedProduct);
+        }
+    });
+});
+
 app.listen(3000, function() {
     console.log("Swag shop api running on port 3000");
 });

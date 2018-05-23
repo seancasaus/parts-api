@@ -5,7 +5,7 @@ var Schema = mongoose.Schema; //set undefined schema object
 var product = new Schema({
     title: String,
     price: Number,
-    review: Number
+    likes: {type: Number, default: 0}
 });
 
 module.exports = mongoose.model('Product', product);
