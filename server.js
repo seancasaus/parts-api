@@ -57,8 +57,13 @@ app.post('/wishlist', function(request, response) {
 
 //get request for wishlist portion of the server
 app.get('/wishlist', function(request, response) {
-    WishList.find({}, function(err, wishLists) {
-        response.status(200).send(wishLists);
+    WishList.find({}).populate({path: "products", model: "Product"}).exec(function(err, wishLists) {
+        if (err) {
+            response.status(500).send({error: "Could not fetch wishlists"});
+        }
+        else {
+            response.status(200).send(wishLists);
+        }
     });
 });
 
